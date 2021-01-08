@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_message"
+        android:icon="@drawable/logo_message"
+        android:title="@string/mesaj"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nav_ozelmessage"
+        android:icon="@drawable/ic_baseline_sms_24"
+        android:title="@string/ozelmesaj"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nav_profil"
+        android:icon="@drawable/logo_profil"
+        android:title="@string/profil"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nav_ayarlar"
+        android:icon="@drawable/logo_ayarlar"
+        android:title="@string/ayarlar"
+        app:showAsAction="always" />
+</menu>

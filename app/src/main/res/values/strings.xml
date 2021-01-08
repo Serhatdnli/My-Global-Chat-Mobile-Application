@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">My Global Chat</string>
+    <string name="app_username">Kullanıcı Adınız</string>
+    <string name="app_password">Şifreniz</string>
+    <string name="app_login">Giriş</string>
+    <string name="app_signup">Kayıt Ol</string>
+    <string name="app_message">Mesajınız</string>
+    <string name="ayarlar">Ayarlar</string>
+    <string name="k">Çıkış</string>
+    <string name="hakkimda">Hakkımda</string>
+    <string name="profil">Profil</string>
+    <string name="mesaj">Mesaj</string>
+    <string name="kayitusername">Kullanıcı Adı</string>
+    <string name="kayitsifre">Şifre</string>
+    <string name="kayitkayit">Kayıt Ol</string>
+    <string name="ozelmesaj">özelmesaj</string>
+</resources>

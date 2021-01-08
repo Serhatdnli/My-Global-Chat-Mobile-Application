@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ayarlar">Ayarlar</string>
+    <string name="k">Çıkış</string>
+    <string name="hakkimda">Hakkımda</string>
+    <string name="profil">Profil</string>
+    <string name="mesaj">Mesaj</string>
+    <string name="kayitsifre">Şifre</string>
+    <string name="kayitkayit">Kayıt Ol</string>
+</resources>

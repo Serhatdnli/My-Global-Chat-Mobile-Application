@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "140353177068",
+    "firebase_url": "https://myglobalchat-e16f2-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "myglobalchat-e16f2",
+    "storage_bucket": "myglobalchat-e16f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140353177068:android:68a0e004787076e13f6cc9",
+        "android_client_info": {
+          "package_name": "com.example.myglobalchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140353177068-cm72cefqjg2it665f6cs3dpgm1ejl3v5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7glFxeWlGkL7SG_U6vhu5Z3MPFObp6PA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "140353177068-cm72cefqjg2it665f6cs3dpgm1ejl3v5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
