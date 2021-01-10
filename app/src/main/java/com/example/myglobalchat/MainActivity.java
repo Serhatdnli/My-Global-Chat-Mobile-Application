@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText kullaniciadi, sifre;
     private TextView textkayit;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         buttongiris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 FirebaseDatabase database2 = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database2.getReference("kullanici");
 
@@ -57,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i <= count; i++) {
                                 if (kullanici.getKullanici_adi().equals(kullaniciadi.getText().toString()) && kullanici.getKullanici_sifre().equals(sifre.getText().toString())) {
                                     Intent gecis = new Intent(MainActivity.this, chatsayfa.class);
+                                    gecis.putExtra("userId",kullaniciadi.getText().toString());
                                     startActivity(gecis);
+                                    finish();
                                     c = 1;
                                     sayac = i;
                                     dongu = count;
@@ -69,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (c == 0 && sayac == dongu) {
                             Toast.makeText(getApplicationContext(), "Kullanıcı Adınızı ve Şifrenizi Kontrol Ediniz", Toast.LENGTH_SHORT).show();
+
                         }
 
                     }

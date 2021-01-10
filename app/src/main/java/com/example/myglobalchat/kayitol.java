@@ -36,6 +36,7 @@ public class kayitol extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("kullanici");
                 DatabaseReference myRef3 = database.getReference("kullanici");
@@ -55,6 +56,7 @@ public class kayitol extends AppCompatActivity {
                             if (kullanici.getKullanici_adi().equals(kayitusername.getText().toString()) && e != 2) {
                                 e = 1;
                                 sayac++;
+
                                 if (sayac == 1) {
                                     Toast.makeText(getApplicationContext(), "Kullanıcı Adı Kullanılıyor.", Toast.LENGTH_SHORT).show();
                                     break;
@@ -65,21 +67,22 @@ public class kayitol extends AppCompatActivity {
                         if (e == 0 && sayac == 0) { //kullanıcı adı daha önce kullanılmadıysa ve yukarıdaki ife hiç girmediyse buna girer.
                             k1.setKullanici_adi(kayitusername.getText().toString());
                             k1.setKullanici_sifre(kayitpassword.getText().toString());
-                            myRef3.push().setValue(k1);
+                            myRef.push().setValue(k1);
                             Toast.makeText(getApplicationContext(), "Hesap Başarıyla Oluşturuldu.", Toast.LENGTH_SHORT).show();
                             Intent gecis2 = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(gecis2);
                             finish();
-                            for (DataSnapshot c : dataSnapshot.getChildren()) {
-                                String key = c.getKey();
-                                k1.setId(key);
-                                Map<String, Object> kullanicimap = new HashMap<>();
-                                kullanicimap.put("kullanici_id", key);
-                                myRef.child(key).updateChildren(kullanicimap);
 
-                            }
 
                             e = 2;
+
+                        }
+                        for (DataSnapshot d : dataSnapshot.getChildren()) {
+                            String key = d.getKey();
+                            k1.setId(key);
+                            Map<String, Object> kullanicimap = new HashMap<>();
+                            kullanicimap.put("kullanici_id", key);
+                            myRef3.child(key).updateChildren(kullanicimap);
 
                         }
 

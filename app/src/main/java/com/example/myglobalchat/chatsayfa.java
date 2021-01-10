@@ -24,6 +24,7 @@ public class chatsayfa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatsayfa);
+        String gelenveri = getIntent().getStringExtra("userId");
 
 
 
@@ -35,23 +36,47 @@ public class chatsayfa extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.nav_profil) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, new layoutprofil()).commit();
+
+                    tempFragment = new layoutprofil();
+                    Bundle kuladidata = new Bundle();//create bundle instance
+                    kuladidata.putString("userId", gelenveri);
+
+                    tempFragment.setArguments(kuladidata);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, tempFragment).commit();
                 }
                 if (item.getItemId() == R.id.nav_message) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, new layoutmesaj()).commit();
+
+                    tempFragment = new layoutmesaj();
+                    Bundle kuladidata = new Bundle();//create bundle instance
+                    kuladidata.putString("userId", gelenveri);
+                    tempFragment.setArguments(kuladidata);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, tempFragment).commit();
                 }
                 if (item.getItemId() == R.id.nav_ayarlar) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, new layoutayarlar()).commit();
+
+                    tempFragment = new layoutayarlar();
+                    Bundle kuladidata = new Bundle();//create bundle instance
+                    kuladidata.putString("userId", gelenveri);
+
+                    tempFragment.setArguments(kuladidata);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, tempFragment).commit();
                 }
                 if (item.getItemId() == R.id.nav_ozelmessage) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, new layoutozelmesaj()).commit();
+
+                    tempFragment = new layoutozelmesaj();
+                    Bundle kuladidata = new Bundle();//create bundle instance
+
+                    kuladidata.putString("userId", gelenveri);
+
+                    tempFragment.setArguments(kuladidata);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, tempFragment).commit();
                 }
 
                 return true;
             }
         });
 
-        String gelenveri = getIntent().getStringExtra("kullaniciadigonder");
+
 
     }
 }
