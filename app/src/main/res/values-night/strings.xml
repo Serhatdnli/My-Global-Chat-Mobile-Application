@@ -7,4 +7,5 @@
     <string name="mesaj">Mesaj</string>
     <string name="kayitsifre">Şifre</string>
     <string name="kayitkayit">Kayıt Ol</string>
+    <string name="mevcut_hesaba_giri_yap">Mevcut Hesaba Giriş Yap</string>
 </resources>

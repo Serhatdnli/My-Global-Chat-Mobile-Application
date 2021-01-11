@@ -1,22 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:src="@drawable/profile_image"
+        app:civ_border_width="5dp"
+        app:civ_border_color="@color/design_default_color_primary"/>
+
+    <EditText
+        android:id="@+id/nickname"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/profile_image"
+        android:inputType="textMultiLine"
+        android:hint="Kullanıcı Adı"
+        android:textAlignment="center"
+        android:drawableStart="@drawable/profil"
+        android:textColor="@color/purple_700"
+        android:textStyle="bold"
+        android:background="@drawable/mesajcerceve"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:padding="6dp"
+        />
+
+    <EditText
+        android:id="@+id/kullanicidurum"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/nickname"
+        android:inputType="textMultiLine"
+        android:hint="Merhaba, şuan Ben Çevrimiçiyim"
+        android:textAlignment="center"
+        android:drawableStart="@drawable/durum"
+        android:textColor="@color/purple_700"
+        android:textStyle="bold"
+        android:background="@drawable/mesajcerceve"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:padding="6dp"
+        />
+    <Button
+        android:id="@+id/ayarlari_guncelle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/kullanicidurum"
+        android:inputType="textMultiLine"
+        android:text="Kaydet"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="#4C5E95"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:padding="6dp"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        />
+
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/exittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="167dp"
-        android:layout_marginTop="301dp"
-        android:layout_marginEnd="186dp"
-        android:layout_marginBottom="339dp"
-        android:text="Ayarlar amk"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_below="@+id/ayarlari_guncelle"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/red"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        android:text="Çıkış"
+        android:textSize="18sp"/>
+
+</RelativeLayout>
