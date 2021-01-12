@@ -117,7 +117,7 @@ public class chatsayfa extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("name").exists())
                 {
-                    Toast.makeText(getApplicationContext(),"Hoşgeldiniz",Toast.LENGTH_SHORT).show();
+
                 }
                 else
                 {

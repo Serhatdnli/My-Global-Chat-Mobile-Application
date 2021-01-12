@@ -1,32 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tolbarprofil"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:navigationIcon="@color/transparant"
+        android:background="@color/purple_700">
 
-    <TextView
-        android:id="@+id/profilkulaniciadi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="165dp"
-        android:layout_marginTop="297dp"
-        android:layout_marginEnd="182dp"
-        android:layout_marginBottom="343dp"
-        android:text="Profil amk"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/kisiekle"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:layout_marginLeft="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/konusmaekle" />
+        <ImageButton
+            android:id="@+id/grupkur"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_marginLeft="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/grupchatkur" />
+    </androidx.appcompat.widget.Toolbar>
+
+  <ListView
+      android:id="@+id/profilliste"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/tolbarprofil"/>
 
     <Button
         android:id="@+id/exitbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="158dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="600dp"
         android:text="Çıkış"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profilkulaniciadi" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+         />
+
+
+</RelativeLayout>

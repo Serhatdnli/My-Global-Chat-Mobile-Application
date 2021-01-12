@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:visibility="visible">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -14,62 +15,60 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:src="@drawable/profile_image"
-        app:civ_border_width="5dp"
-        app:civ_border_color="@color/design_default_color_primary"/>
+        app:civ_border_color="@color/design_default_color_primary"
+        app:civ_border_width="5dp" />
 
     <EditText
         android:id="@+id/nickname"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
         android:layout_below="@+id/profile_image"
-        android:inputType="textMultiLine"
-        android:hint="Kullanıcı Adı"
-        android:textAlignment="center"
-        android:drawableStart="@drawable/profil"
-        android:textColor="@color/purple_700"
-        android:textStyle="bold"
-        android:background="@drawable/mesajcerceve"
-        android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/mesajcerceve"
+        android:drawableStart="@drawable/profil"
+        android:hint="Kullanıcı Adı"
+        android:inputType="textMultiLine"
         android:padding="6dp"
-        />
+        android:textAlignment="center"
+        android:textColor="@color/purple_700"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/kullanicidurum"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
         android:layout_below="@+id/nickname"
-        android:inputType="textMultiLine"
-        android:hint="Merhaba, şuan Ben Çevrimiçiyim"
-        android:textAlignment="center"
-        android:drawableStart="@drawable/durum"
-        android:textColor="@color/purple_700"
-        android:textStyle="bold"
-        android:background="@drawable/mesajcerceve"
-        android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/mesajcerceve"
+        android:drawableStart="@drawable/durum"
+        android:hint="Merhaba, şuan Ben Çevrimiçiyim"
+        android:inputType="textMultiLine"
         android:padding="6dp"
-        />
+        android:textAlignment="center"
+        android:textColor="@color/purple_700"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/ayarlari_guncelle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
         android:layout_below="@+id/kullanicidurum"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="15dp"
+        android:background="#4C5E95"
         android:inputType="textMultiLine"
+        android:padding="6dp"
         android:text="Kaydet"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:background="#4C5E95"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
-        android:padding="6dp"
         android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="20sp"
-        />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/exittext"
@@ -78,10 +77,11 @@
         android:layout_below="@+id/ayarlari_guncelle"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/red"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
         android:text="Çıkış"
-        android:textSize="18sp"/>
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:visibility="visible" />
 
 </RelativeLayout>

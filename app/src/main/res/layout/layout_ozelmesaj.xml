@@ -46,7 +46,8 @@
         android:layout_above="@+id/relati"
         android:layout_below="@+id/tolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
 
     <RelativeLayout
         android:id="@+id/relati"
