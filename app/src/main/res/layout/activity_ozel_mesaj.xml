@@ -4,27 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".grupchat">
+    tools:context=".OzelMesaj">
 
 
 
 
 
 
-        <TextView
-            android:id="@+id/grupisimi"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textAllCaps="false"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="@color/purple_700"
-            android:text="@string/app_login"
-            android:paddingTop="15dp"
-            android:paddingLeft="20dp"
-            android:textSize="19dp"/>
+    <TextView
+        android:id="@+id/chatisimi"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/purple_700"
+        android:text="@string/app_login"
+        android:paddingTop="15dp"
+        android:paddingLeft="20dp"
+        android:textSize="19dp"/>
 
 
 
@@ -33,22 +33,22 @@
 
 
     <ScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/lineerlayout"
-        android:layout_below="@+id/grupisimi"
+        android:layout_above="@+id/lineerlayout2"
+        android:layout_below="@+id/chatisimi"
 
-       >
+        >
 
         <LinearLayout
-            android:id="@+id/linermesaj"
+            android:id="@+id/linermesaj2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/grupchattextgoster"
+                android:id="@+id/chattextgoster2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
@@ -65,14 +65,14 @@
         </LinearLayout>
     </ScrollView>
     <LinearLayout
-        android:id="@+id/lineerlayout"
+        android:id="@+id/lineerlayout2"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:orientation="horizontal"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true">
         <EditText
-            android:id="@+id/grupmesajgiris"
+            android:id="@+id/chatmesajgiris"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Mesajınızı Giriniz"
@@ -82,7 +82,7 @@
             android:layout_marginTop="10dp"
             />
         <ImageButton
-            android:id="@+id/mesajgondertusu"
+            android:id="@+id/mesajgondertusu2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="15dp"

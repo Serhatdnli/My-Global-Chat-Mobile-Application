@@ -57,6 +57,16 @@ public class grupchat extends AppCompatActivity {
 
         scrollView.fullScroll(ScrollView.FOCUS_DOWN);
         kulanicibilgisial();
+
+        grupmesajgiris.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+
+
+
+            }
+        });
         mesajgondertusu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,8 +130,9 @@ public class grupchat extends AppCompatActivity {
             String mesajmessage = ((DataSnapshot)iterator2.next()).getValue().toString();
             String mesajname = ((DataSnapshot)iterator2.next()).getValue().toString();
             String mesajtime= ((DataSnapshot)iterator2.next()).getValue().toString();
-            grupchattextgoster.append(mesajname + " :\n" + mesajmessage +"\n" + mesajtime + "     " + mesajdate + "\n\n\n\n");
             scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            grupchattextgoster.append(mesajname + " :\n" + mesajmessage +"\n" + mesajtime + "     " + mesajdate + "\n\n");
+
         }
 
 

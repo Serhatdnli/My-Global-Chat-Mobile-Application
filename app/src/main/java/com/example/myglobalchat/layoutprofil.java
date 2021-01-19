@@ -49,7 +49,7 @@ public class layoutprofil extends Fragment {
     private ImageButton kisiekle,grupkur;
     private ListView profilliste;
     private ArrayAdapter <String> arrayAdapter;
-    private ArrayList <String > gruplist = new ArrayList<>();
+    private ArrayList <String> gruplist = new ArrayList<>();
     private DatabaseReference grupreferans;
     @Nullable
     @Override
@@ -65,7 +65,7 @@ public class layoutprofil extends Fragment {
         RootRef = FirebaseDatabase.getInstance().getReference();
         grupreferans = FirebaseDatabase.getInstance().getReference().child("gruplar");
         profilliste = view.findViewById(R.id.profilliste);
-        arrayAdapter = new ArrayAdapter<String >(getContext(), android.R.layout.simple_list_item_1,gruplist);
+        arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,gruplist);
         profilliste.setAdapter(arrayAdapter);
         getirgostergrupr();
 
@@ -112,6 +112,14 @@ public class layoutprofil extends Fragment {
             }
         });
 
+        kisiekle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gecis = new Intent(getContext(),ArkadasbulActivity.class);
+                startActivity(gecis);
+            }
+        });
+
         return view;
     }
 
@@ -120,7 +128,7 @@ public class layoutprofil extends Fragment {
         grupreferans.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Set<String > set = new HashSet<>();
+                Set<String> set = new HashSet<>();
                 Iterator iterator = dataSnapshot.getChildren().iterator();
                 while (iterator.hasNext())
                 {

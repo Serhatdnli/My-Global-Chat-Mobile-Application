@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,9 +29,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.net.URI;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -51,6 +54,7 @@ public class layoutayarlar extends Fragment {
     private static final int RESULT_OK = -1 ;
     private StorageReference kullaniciprofilresmi;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,16 +73,8 @@ public class layoutayarlar extends Fragment {
         kullaniciprofilresmi = FirebaseStorage.getInstance().getReference().child("Profil Fotograflari");
 
 
-        profile_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent galleriIntent = new Intent();
-                galleriIntent.setAction(Intent.ACTION_GET_CONTENT);
-                galleriIntent.setType("image/*");
-                startActivityForResult(galleriIntent, galeripick);
-            }
-        });
+
 
 
         ayarlari_guncelle.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +83,9 @@ public class layoutayarlar extends Fragment {
                 ayarguncelleme();
             }
         });
+
+
+
         exittext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,9 +97,30 @@ public class layoutayarlar extends Fragment {
 
             }
         });
+
+
+
         kullanicibilgisigetir();
 
+        profile_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent galleriIntent = new Intent();
+                galleriIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleriIntent.setType("image/*");
+               // startActivityForResult(galleriIntent,galeripick);
+
+
+                onActivityResult(1,-1,galleriIntent);
+
+
+            }
+        });
+
         return view;
+
+
     }
 
 
@@ -138,56 +158,21 @@ public class layoutayarlar extends Fragment {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == galeripick && resultCode == RESULT_OK && data != null  )
-        {
-            Uri imageUri = data.getData();
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1,1)
-                    .start(getContext(), this);
-
-
-        }
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-                StorageReference filePath = kullaniciprofilresmi.child(currentuserID+".jpg");
-                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if (task.isSuccessful())
-                        {
-                            Toast.makeText(getContext(),"Profil Fotoğrafı Başarıyla Değiştirildi.", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            String hata = task.getException().toString();
-                            Toast.makeText(getContext(),"Hata : " +hata , Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-            }
-        }
-    }
 
     private void kullanicibilgisigetir() {
         RootRef.child("kullanicilar").child(currentuserID)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if ((dataSnapshot.exists()) && (dataSnapshot.hasChild("name")) && (dataSnapshot.hasChild("resim"))) {
+                        if ((dataSnapshot.exists()) && (dataSnapshot.hasChild("name")) && (dataSnapshot.hasChild("image"))) {
                             String nicknamegetir = dataSnapshot.child("name").getValue().toString();
                             String durumgetir = dataSnapshot.child("durum").getValue().toString();
-                            String resimgetir = dataSnapshot.child("resim").getValue().toString();
+                            String resimgetir = dataSnapshot.child("image").getValue().toString();
                             nickname.setText(nicknamegetir);
                             kullanicidurum.setText(durumgetir);
+                            Picasso.get().load(resimgetir).into(profile_image);
+
                         } else if ((dataSnapshot.exists()) && (dataSnapshot.hasChild("name"))) {
 
                             String nicknamegetir = dataSnapshot.child("name").getValue().toString();
@@ -205,5 +190,69 @@ public class layoutayarlar extends Fragment {
 
                     }
                 });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode ==galeripick && resultCode==RESULT_OK && data != null)
+        {
+            Uri imageUri = data.getData();
+            CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1,1)
+                    .start(getContext(),this);
+
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                StorageReference filePath = kullaniciprofilresmi.child(currentuserID+".jpg");
+                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task2) {
+                        if (task2.isSuccessful())
+                        {
+
+                            Toast.makeText(getContext(),"Profil Fotoğrafı Başarıyla Değiştirildi.", Toast.LENGTH_SHORT).show();
+
+                            final Task<Uri> profilurl = task2.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    RootRef.child("kullanicilar").child(currentuserID).child("image").setValue(uri.toString())
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful())
+                                                    {
+                                                        Toast.makeText(getContext(),"Resim Veritabanına Başarıyla Yüklendi",Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    else
+                                                    {
+                                                        String error = task.getException().toString();
+                                                        Toast.makeText(getContext(),"Hata : " + error , Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+
+
+                                }
+                            });
+
+                        }
+                        else
+                        {
+                            String hata = task2.getException().toString();
+                            Toast.makeText(getContext(),"Hata : " +hata , Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
     }
 }

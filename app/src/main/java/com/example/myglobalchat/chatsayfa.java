@@ -42,7 +42,7 @@ public class chatsayfa extends AppCompatActivity {
 
 
         bottomNavigationView2 = findViewById(R.id.bottomNavigationView2);
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentgosterici, new layoutmesaj()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragmentgosterici, new layoutprofil()).commit();
 
 
         bottomNavigationView2.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -57,14 +57,7 @@ public class chatsayfa extends AppCompatActivity {
                     tempFragment.setArguments(kuladidata);
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, tempFragment).commit();
                 }
-                if (item.getItemId() == R.id.nav_message) {
 
-                    tempFragment = new layoutmesaj();
-                    Bundle kuladidata = new Bundle();//create bundle instance
-                    kuladidata.putString("userId", gelenveri);
-                    tempFragment.setArguments(kuladidata);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, tempFragment).commit();
-                }
                 if (item.getItemId() == R.id.nav_ayarlar) {
 
                     tempFragment = new layoutayarlar();
@@ -73,16 +66,7 @@ public class chatsayfa extends AppCompatActivity {
                     tempFragment.setArguments(kuladidata);
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, tempFragment).commit();
                 }
-                if (item.getItemId() == R.id.nav_ozelmessage) {
 
-                    tempFragment = new layoutozelmesaj();
-                    Bundle kuladidata = new Bundle();//create bundle instance
-
-                    kuladidata.putString("userId", gelenveri);
-
-                    tempFragment.setArguments(kuladidata);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, tempFragment).commit();
-                }
 
                 return true;
             }
