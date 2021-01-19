@@ -130,9 +130,9 @@ public class grupchat extends AppCompatActivity {
             String mesajmessage = ((DataSnapshot)iterator2.next()).getValue().toString();
             String mesajname = ((DataSnapshot)iterator2.next()).getValue().toString();
             String mesajtime= ((DataSnapshot)iterator2.next()).getValue().toString();
-            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-            grupchattextgoster.append(mesajname + " :\n" + mesajmessage +"\n" + mesajtime + "     " + mesajdate + "\n\n");
 
+            grupchattextgoster.append(mesajname + " :\n" + mesajmessage +"\n" + mesajtime + "     " + mesajdate + "\n\n");
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
         }
 
 

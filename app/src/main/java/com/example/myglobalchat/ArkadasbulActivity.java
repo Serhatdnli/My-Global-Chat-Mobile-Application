@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -24,6 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ArkadasbulActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DatabaseReference kullaniciRef;
+    private String simdikikullaniciid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +58,14 @@ public class ArkadasbulActivity extends AppCompatActivity {
                 Picasso.get().load(model.getImage()).placeholder(R.drawable.profile_image).into(holder.kullanicilarprofilresim);
 
 
-                /* listeye tıklandığında gönderilicek yer*/
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent gecis = new Intent(getApplicationContext(),OzelMesaj.class);
+                        gecis.putExtra("kime",model.getName());
+                        startActivity(gecis);
+
 
                     }
                 });

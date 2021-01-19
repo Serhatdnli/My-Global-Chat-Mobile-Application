@@ -157,6 +157,7 @@ public class kayitol extends AppCompatActivity {
                                     String kullaniciID = Auth.getCurrentUser().getUid();
                                     RootRef.child("kullanicilar").child(kullaniciID).setValue("");
 
+
                                     Toast.makeText(getApplicationContext(),"Hesap Başarıyla Oluşturuldu", Toast.LENGTH_SHORT).show();
                                     Intent gecis2 = new Intent(getApplicationContext(), chatsayfa.class);
                                     startActivity(gecis2);

@@ -91,12 +91,7 @@ public class layoutprofil extends Fragment {
             }
         });
 
-        kisiekle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
 
 
