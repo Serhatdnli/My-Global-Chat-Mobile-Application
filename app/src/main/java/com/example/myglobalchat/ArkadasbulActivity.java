@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -24,8 +25,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ArkadasbulActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private DatabaseReference kullaniciRef;
+    private DatabaseReference kullaniciRef,kullaniciRef2;
     private String simdikikullaniciid;
+    private FirebaseAuth gAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,12 @@ public class ArkadasbulActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         kullaniciRef = FirebaseDatabase.getInstance().getReference().child("kullanicilar");
+        gAuth = FirebaseAuth.getInstance();
+        simdikikullaniciid=gAuth.getUid();
+        kullaniciRef2 = FirebaseDatabase.getInstance().getReference().child("kullanicilar").child(simdikikullaniciid);
+
+        kullaniciRef2.child("kontrol").push().setValue("");
+
 
 
     }

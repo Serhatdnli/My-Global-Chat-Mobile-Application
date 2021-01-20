@@ -1,17 +1,20 @@
 package com.example.myglobalchat;
 
+import androidx.annotation.Nullable;
+
 public class kullanicilar {
 
-    public String name,durum,image;
-    public kullanicilar()
-    {
+    public String name, durum, image, uid;
+
+    public kullanicilar() {
 
     }
 
-    public kullanicilar(String name, String durum, String image) {
+    public kullanicilar(String name, String durum, @Nullable String image, String uid) {
         this.name = name;
         this.durum = durum;
         this.image = image;
+        this.uid = uid;
     }
 
     public String getName() {
@@ -36,5 +39,13 @@ public class kullanicilar {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

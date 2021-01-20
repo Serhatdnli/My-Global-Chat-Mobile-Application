@@ -46,40 +46,44 @@ public class layoutprofil extends Fragment {
     private FirebaseUser currentuser;
     private DatabaseReference RootRef;
     private Toolbar tolbarprofil;
-    private ImageButton kisiekle,grupkur;
+    private ImageButton kisiekle, grupkur;
     private ListView profilliste;
-    private ArrayAdapter <String> arrayAdapter;
-    private ArrayList <String> gruplist = new ArrayList<>();
-    private DatabaseReference grupreferans;
+    private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<String> gruplist = new ArrayList<>();
+    private DatabaseReference grupreferans, privatechatRef, privatechatalici;
+    private String currentkullanicid,currentkullaniciadi;
+    private Integer count;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_profil,container,false);
+        View view = inflater.inflate(R.layout.layout_profil, container, false);
 
         exitbutton = view.findViewById(R.id.exitbutton);
         gAuth = FirebaseAuth.getInstance();
         currentuser = gAuth.getCurrentUser();
         tolbarprofil = view.findViewById(R.id.tolbarprofil);
         kisiekle = view.findViewById(R.id.kisiekle);
+        currentkullanicid = gAuth.getCurrentUser().getUid();
+
         grupkur = view.findViewById(R.id.grupkur);
         RootRef = FirebaseDatabase.getInstance().getReference();
+        currentkullaniciadi = RootRef.child("kullanicilar").child(currentkullanicid).child("name").toString();
         grupreferans = FirebaseDatabase.getInstance().getReference().child("gruplar");
+        privatechatRef = FirebaseDatabase.getInstance().getReference().child("privatechat");
         profilliste = view.findViewById(R.id.profilliste);
-        arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,gruplist);
+        arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, gruplist);
         profilliste.setAdapter(arrayAdapter);
         getirgostergrupr();
-
-
-
-
+        //getirgosterprivatechat();
 
 
         profilliste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String currentgrupname = parent.getItemAtPosition(position).toString();
-                Intent grupchat = new Intent(getContext(),grupchat.class);
-                grupchat.putExtra("grupismi",currentgrupname);
+                Intent grupchat = new Intent(getContext(), grupchat.class);
+                grupchat.putExtra("grupismi", currentgrupname);
                 startActivity(grupchat);
             }
         });
@@ -90,9 +94,6 @@ public class layoutprofil extends Fragment {
                 grupolusturmenu();
             }
         });
-
-
-
 
 
         exitbutton.setOnClickListener(new View.OnClickListener() {
@@ -110,13 +111,15 @@ public class layoutprofil extends Fragment {
         kisiekle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent gecis = new Intent(getContext(),ArkadasbulActivity.class);
+                Intent gecis = new Intent(getContext(), ArkadasbulActivity.class);
+
                 startActivity(gecis);
             }
         });
 
         return view;
     }
+
 
     private void getirgostergrupr() {
 
@@ -125,9 +128,8 @@ public class layoutprofil extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Set<String> set = new HashSet<>();
                 Iterator iterator = dataSnapshot.getChildren().iterator();
-                while (iterator.hasNext())
-                {
-                    set.add(((DataSnapshot)iterator.next()).getKey());
+                while (iterator.hasNext()) {
+                    set.add(((DataSnapshot) iterator.next()).getKey());
                 }
                 gruplist.clear();
                 gruplist.addAll(set);
@@ -142,8 +144,51 @@ public class layoutprofil extends Fragment {
     }
 
 
+/*    private void getirgosterprivatechat() {
+
+        privatechatRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Set<String> set = new HashSet<>();
+                Iterator iterator = dataSnapshot.getChildren().iterator();
+
+
+                for (DataSnapshot d : dataSnapshot.getChildren())
+                {
+                    privatechat ozelmesaj = d.getValue(privatechat.class);
+                    count = (int) dataSnapshot.getChildrenCount();
+
+
+                for (int i = 0; i <= count; i++) {
+                    if (ozelmesaj.getAlici().equals(currentkullaniciadi)) {
+
+                        set.add(ozelmesaj.toString());
+                        gruplist.clear();
+                        gruplist.addAll(set);
+                        arrayAdapter.notifyDataSetChanged();
+
+                    }
+                }
+                }
+
+
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }*/
+
+
     private void grupolusturmenu() {
-        AlertDialog.Builder kurucu = new AlertDialog.Builder(getContext(),R.style.AlertDialog);
+        AlertDialog.Builder kurucu = new AlertDialog.Builder(getContext(), R.style.AlertDialog);
         kurucu.setTitle("Grup İsmini Girin : ");
         final EditText grupismi = new EditText(getContext());
         grupismi.setHint("Grup İsmi");
@@ -151,23 +196,20 @@ public class layoutprofil extends Fragment {
         kurucu.setPositiveButton("Oluştur", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String grupadi= grupismi.getText().toString();
-                if (TextUtils.isEmpty(grupadi))
-                {
-                    Toast.makeText(getContext(),"Lütfen Grup İsmi Giriniz",Toast.LENGTH_SHORT).show();
+                String grupadi = grupismi.getText().toString();
+                if (TextUtils.isEmpty(grupadi)) {
+                    Toast.makeText(getContext(), "Lütfen Grup İsmi Giriniz", Toast.LENGTH_SHORT).show();
+                } else {
+                    grupolustur(grupadi);
+
+
                 }
-                else
-                    {
-                        grupolustur(grupadi);
-
-
-                    }
             }
         });
         kurucu.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-              dialog.cancel();
+                dialog.cancel();
             }
         });
 
@@ -179,9 +221,8 @@ public class layoutprofil extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful())
-                        {
-                            Toast.makeText(getContext(),"Grup Başarı İle Oluşturuldu",Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getContext(), "Grup Başarı İle Oluşturuldu", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
