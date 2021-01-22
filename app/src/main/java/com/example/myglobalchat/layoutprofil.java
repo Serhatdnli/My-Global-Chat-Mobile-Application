@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,9 +51,10 @@ public class layoutprofil extends Fragment {
     private ListView profilliste;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> gruplist = new ArrayList<>();
-    private DatabaseReference grupreferans, privatechatRef, privatechatalici;
+    private DatabaseReference grupreferans, privatechatRef, privatechatalici,kullaniciRef;
     private String currentkullanicid,currentkullaniciadi;
     private Integer count;
+
 
     @Nullable
     @Override
@@ -65,17 +67,18 @@ public class layoutprofil extends Fragment {
         tolbarprofil = view.findViewById(R.id.tolbarprofil);
         kisiekle = view.findViewById(R.id.kisiekle);
         currentkullanicid = gAuth.getCurrentUser().getUid();
-
+        kullaniciRef=FirebaseDatabase.getInstance().getReference().child("kullanicilar").child(currentkullanicid);
         grupkur = view.findViewById(R.id.grupkur);
         RootRef = FirebaseDatabase.getInstance().getReference();
-        currentkullaniciadi = RootRef.child("kullanicilar").child(currentkullanicid).child("name").toString();
+        //currentkullaniciadi = RootRef.child("kullanicilar").child(currentkullanicid).child("name").toString();
         grupreferans = FirebaseDatabase.getInstance().getReference().child("gruplar");
         privatechatRef = FirebaseDatabase.getInstance().getReference().child("privatechat");
+
         profilliste = view.findViewById(R.id.profilliste);
         arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, gruplist);
         profilliste.setAdapter(arrayAdapter);
         getirgostergrupr();
-        //getirgosterprivatechat();
+        kulanicibilgisial();
 
 
         profilliste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,6 +123,59 @@ public class layoutprofil extends Fragment {
         return view;
     }
 
+    private void kulanicibilgisial() {
+        kullaniciRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    currentkullaniciadi = dataSnapshot.child("name").getValue().toString();
+                    privatechatalici =FirebaseDatabase.getInstance().getReference().child("privatechat").child(currentkullaniciadi);
+                    privatechatalici.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            if (dataSnapshot.exists()) {
+                                //getirgosterprivatechat(dataSnapshot);
+                            }
+
+                        }
+
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            if (dataSnapshot.exists()) {
+                                //getirgosterprivatechat(dataSnapshot);
+                            }
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
 
     private void getirgostergrupr() {
 
@@ -144,38 +200,20 @@ public class layoutprofil extends Fragment {
     }
 
 
-/*    private void getirgosterprivatechat() {
+/*    private void getirgosterprivatechat(DataSnapshot dataSnapshot) {
 
         privatechatRef.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Set<String> set = new HashSet<>();
+
                 Iterator iterator = dataSnapshot.getChildren().iterator();
-
-
-                for (DataSnapshot d : dataSnapshot.getChildren())
-                {
-                    privatechat ozelmesaj = d.getValue(privatechat.class);
-                    count = (int) dataSnapshot.getChildrenCount();
-
-
-                for (int i = 0; i <= count; i++) {
-                    if (ozelmesaj.getAlici().equals(currentkullaniciadi)) {
-
-                        set.add(ozelmesaj.toString());
-                        gruplist.clear();
-                        gruplist.addAll(set);
-                        arrayAdapter.notifyDataSetChanged();
-
-                    }
+                while (iterator.hasNext()) {
+                    set.add(((DataSnapshot) iterator.next()).getKey());
                 }
-                }
-
-
-
-
-
+                gruplist.clear();
+                gruplist.addAll(set);
+                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -217,7 +255,7 @@ public class layoutprofil extends Fragment {
     }
 
     private void grupolustur(String grupadi) {
-        RootRef.child("gruplar").child(grupadi).setValue("")
+        RootRef.child("gruplar").child(grupadi+"(Grup)").setValue("")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
