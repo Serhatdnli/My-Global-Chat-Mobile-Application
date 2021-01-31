@@ -33,7 +33,7 @@ public class OzelMesaj extends AppCompatActivity {
     private EditText chatmesajgiris;
     private ImageButton mesajgondertusu2;
     private String currentchatismi, currentkullaniciadi, currentkullanicid, simdikitarih, simdikisaat;
-    private DatabaseReference kullaniciRef, gidecekkullaniciismiRef, chatmesajkeyRef,chatmesajkeyRef2,chatmesajkeyRef3;
+    private DatabaseReference kullaniciRef, gidecekkullaniciismiRef, chatmesajkeyRef, chatmesajkeyRef2, chatmesajkeyRef3;
     private FirebaseAuth gAuth;
 
 
@@ -55,15 +55,6 @@ public class OzelMesaj extends AppCompatActivity {
         kulanicibilgisial();
 
 
-
-
-
-
-
-
-
-
-
         mesajgondertusu2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,43 +74,32 @@ public class OzelMesaj extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     currentkullaniciadi = dataSnapshot.child("name").getValue().toString();
-                    Toast.makeText(getApplicationContext(),currentkullaniciadi,Toast.LENGTH_SHORT).show();
-                    chatmesajkeyRef3 =FirebaseDatabase.getInstance().getReference().child("privatechat").child(currentkullaniciadi);
+                    Toast.makeText(getApplicationContext(), currentkullaniciadi, Toast.LENGTH_SHORT).show();
+                    chatmesajkeyRef3 = FirebaseDatabase.getInstance().getReference().child("privatechat").child(currentkullaniciadi);
                     chatmesajkeyRef3.addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                             if (dataSnapshot.exists()) {
                                 mesajgoster(dataSnapshot);
                             }
-
                         }
-
                         @Override
                         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                             if (dataSnapshot.exists()) {
                                 mesajgoster(dataSnapshot);
                             }
-
                         }
-
                         @Override
                         public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
                         }
-
                         @Override
                         public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
                         }
                     });
-
                 }
-
             }
 
             @Override
@@ -136,12 +116,7 @@ public class OzelMesaj extends AppCompatActivity {
         super.onStart();
 
 
-
-
-
-
     }
-
 
 
     private void mesajlarıveritabaninakaydet() {
@@ -173,7 +148,7 @@ public class OzelMesaj extends AppCompatActivity {
             mesajbilgimap.put("time", simdikisaat);
             gidecekkullaniciismiRef.updateChildren(mesajbilgimap);
 
-            chatmesajkeyRef2= FirebaseDatabase.getInstance().getReference().child("privatechat").child(currentkullaniciadi);
+            chatmesajkeyRef2 = FirebaseDatabase.getInstance().getReference().child("privatechat").child(currentkullaniciadi);
             chatmesajkeyRef2.updateChildren(chatmesajkey);
             gidecekkullaniciismiRef = chatmesajkeyRef2.child(mesajkey);
             HashMap<String, Object> mesajbilgimap2 = new HashMap<>();
@@ -185,15 +160,10 @@ public class OzelMesaj extends AppCompatActivity {
             gidecekkullaniciismiRef.updateChildren(mesajbilgimap2);
 
 
-
-
         }
 
 
     }
-
-
-
 
 
     private void mesajgoster(DataSnapshot dataSnapshot) {
@@ -205,14 +175,14 @@ public class OzelMesaj extends AppCompatActivity {
             String mesajmesaj = ((DataSnapshot) iterator2.next()).getValue().toString();
             String mesajtime2 = ((DataSnapshot) iterator2.next()).getValue().toString();
 
-           if (mesajalici.equals(currentkullaniciadi) && mesajgonderici.equals(currentchatismi)) {
+            if (mesajalici.equals(currentkullaniciadi) && mesajgonderici.equals(currentchatismi)) {
 
-                chattextgoster2.append(""+mesajgonderici + " :\n" + mesajmesaj + "\n" + mesajtime2 + "     " + mesajdate + "\n\n");
+                chattextgoster2.append("" + mesajgonderici + " :\n" + mesajmesaj + "\n" + mesajtime2 + "     " + mesajdate + "\n\n");
                 scrollView2.fullScroll(ScrollView.FOCUS_DOWN);
 
-            }if (mesajalici.equals(currentchatismi) && mesajgonderici.equals(currentkullaniciadi))
-            {
-                chattextgoster2.append(""+mesajgonderici + " :\n" + mesajmesaj + "\n" + mesajtime2 + "     " + mesajdate + "\n\n");
+            }
+            if (mesajalici.equals(currentchatismi) && mesajgonderici.equals(currentkullaniciadi)) {
+                chattextgoster2.append("" + mesajgonderici + " :\n" + mesajmesaj + "\n" + mesajtime2 + "     " + mesajdate + "\n\n");
                 scrollView2.fullScroll(ScrollView.FOCUS_DOWN);
             }
         }

@@ -6,10 +6,12 @@
         android:id="@+id/nav_profil"
         android:icon="@drawable/logo_message"
         android:title="Mesajlar"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        />
     <item
         android:id="@+id/nav_ayarlar"
         android:icon="@drawable/logo_ayarlar"
+        android:iconTint="#FFFFFF"
         android:title="@string/ayarlar"
         app:showAsAction="always" />
 </menu>

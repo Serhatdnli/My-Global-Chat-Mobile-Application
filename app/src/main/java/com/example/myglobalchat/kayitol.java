@@ -32,10 +32,11 @@ import java.util.Map;
 public class kayitol extends AppCompatActivity {
 
     private FirebaseAuth Auth;
-    private TextInputEditText kayitusername,kayitpassword;
+    private TextInputEditText kayitusername, kayitpassword;
     private Button buttonKayit;
     private TextView zatenhesabimvar;
     private DatabaseReference RootRef;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +48,6 @@ public class kayitol extends AppCompatActivity {
         zatenhesabimvar = findViewById(R.id.zatenhesabimvar);
         Auth = FirebaseAuth.getInstance();
         RootRef = FirebaseDatabase.getInstance().getReference();
-
-
-
 
 
         buttonKayit.setOnClickListener(new View.OnClickListener() {
@@ -121,62 +119,46 @@ public class kayitol extends AppCompatActivity {
         zatenhesabimvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent geri = new Intent(getApplicationContext(),MainActivity.class);
+                Intent geri = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(geri);
                 finish();
             }
         });
-       
 
 
     }
 
 
-
-
-  private void hesapolustur() {
+    private void hesapolustur() {
 
         String kullaniciadi = kayitusername.getText().toString();
         String kullanicisifre = kayitpassword.getText().toString();
-        if (TextUtils.isEmpty(kullaniciadi))
-        {
-            Toast.makeText(getApplicationContext(),"Kullanıcı Adı Boş Bırakılamaz", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(kullaniciadi)) {
+            Toast.makeText(getApplicationContext(), "Kullanıcı Adı Boş Bırakılamaz", Toast.LENGTH_SHORT).show();
         }
-        if (TextUtils.isEmpty(kullanicisifre))
-        {
-            Toast.makeText(getApplicationContext(),"Şifre Boş Bırakılamaz", Toast.LENGTH_SHORT).show();
-        }
-        else
-            {
-                Auth.createUserWithEmailAndPassword(kullaniciadi,kullanicisifre)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful())
-                                {
-                                    String kullaniciID = Auth.getCurrentUser().getUid();
-                                    RootRef.child("kullanicilar").child(kullaniciID).setValue("");
-
-
-                                    Toast.makeText(getApplicationContext(),"Hesap Başarıyla Oluşturuldu", Toast.LENGTH_SHORT).show();
-                                    Intent gecis2 = new Intent(getApplicationContext(), chatsayfa.class);
-                                    startActivity(gecis2);
-                                    finish();
-                                }
-                                else
-                                    {
-
-                                        String error = task.getException().toString();
-                                        Toast.makeText(getApplicationContext(),"Hata! " + error, Toast.LENGTH_SHORT).show();
-
-                                    }
+        if (TextUtils.isEmpty(kullanicisifre)) {
+            Toast.makeText(getApplicationContext(), "Şifre Boş Bırakılamaz", Toast.LENGTH_SHORT).show();
+        } else {
+            Auth.createUserWithEmailAndPassword(kullaniciadi, kullanicisifre)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                String kullaniciID = Auth.getCurrentUser().getUid();
+                                RootRef.child("kullanicilar").child(kullaniciID).setValue("");
+                                Toast.makeText(getApplicationContext(), "Hesap Başarıyla Oluşturuldu", Toast.LENGTH_SHORT).show();
+                                Intent gecis2 = new Intent(getApplicationContext(), chatsayfa.class);
+                                startActivity(gecis2);
+                                finish();
+                            } else {
+                                String error = task.getException().toString();
+                                Toast.makeText(getApplicationContext(), "Hata! " + error, Toast.LENGTH_SHORT).show();
                             }
-                        });
-            }
+                        }
+                    });
+        }
 
     }
-
-
 
 
 }

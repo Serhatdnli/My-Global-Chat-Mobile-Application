@@ -29,7 +29,6 @@ public class chatsayfa extends AppCompatActivity {
     private DatabaseReference RoofRef;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +39,8 @@ public class chatsayfa extends AppCompatActivity {
         RoofRef = FirebaseDatabase.getInstance().getReference();
 
 
-
         bottomNavigationView2 = findViewById(R.id.bottomNavigationView2);
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentgosterici, new layoutprofil()).commit();
+        //getSupportFragmentManager().beginTransaction().add(R.id.fragmentgosterici, new layoutprofil()).commit();
 
 
         bottomNavigationView2.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,24 +71,19 @@ public class chatsayfa extends AppCompatActivity {
         });
 
 
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (currentuser == null)
-        {
-            Intent gecis = new Intent(getApplicationContext(),MainActivity.class);
+        if (currentuser == null) {
+            Intent gecis = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(gecis);
             finish();
+        } else {
+            kullanicidogrula();
         }
-        else
-            {
-                kullanicidogrula();
-            }
     }
-
 
 
     private void kullanicidogrula() {
@@ -99,20 +92,14 @@ public class chatsayfa extends AppCompatActivity {
         RoofRef.child("kullanicilar").child(mevcutkullaniciID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("name").exists())
-                {
-
-                }
-                else
-                {
-                    tempFragment = new layoutayarlar();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, tempFragment).commit();
+                if (dataSnapshot.child("name").exists()) {
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragmentgosterici, new layoutprofil()).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentgosterici, new layoutayarlar()).commit();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }

@@ -42,7 +42,7 @@ import java.util.Set;
 public class layoutprofil extends Fragment {
 
 
-    private Button exitbutton;
+
     private FirebaseAuth gAuth;
     private FirebaseUser currentuser;
     private DatabaseReference RootRef;
@@ -61,7 +61,7 @@ public class layoutprofil extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_profil, container, false);
 
-        exitbutton = view.findViewById(R.id.exitbutton);
+
         gAuth = FirebaseAuth.getInstance();
         currentuser = gAuth.getCurrentUser();
         tolbarprofil = view.findViewById(R.id.tolbarprofil);
@@ -99,17 +99,7 @@ public class layoutprofil extends Fragment {
         });
 
 
-        exitbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gAuth.signOut();
-                currentuser = null;
-                Intent gecis = new Intent(getContext(), MainActivity.class);
-                startActivity(gecis);
-                getActivity().finish();
 
-            }
-        });
 
         kisiekle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,12 +113,29 @@ public class layoutprofil extends Fragment {
         return view;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (currentuser == null)
+        {
+            Intent gecis = new Intent(getContext(),MainActivity.class);
+            startActivity(gecis);
+
+        }
+
+    }
+
     private void kulanicibilgisial() {
         kullaniciRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
+
+
                     currentkullaniciadi = dataSnapshot.child("name").getValue().toString();
+
                     privatechatalici =FirebaseDatabase.getInstance().getReference().child("privatechat").child(currentkullaniciadi);
                     privatechatalici.addChildEventListener(new ChildEventListener() {
                         @Override

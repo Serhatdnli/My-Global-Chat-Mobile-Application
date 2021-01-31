@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ArkadasbulActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private DatabaseReference kullaniciRef,kullaniciRef2;
+    private DatabaseReference kullaniciRef, kullaniciRef2;
     private String simdikikullaniciid;
     private FirebaseAuth gAuth;
 
@@ -39,16 +39,11 @@ public class ArkadasbulActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         kullaniciRef = FirebaseDatabase.getInstance().getReference().child("kullanicilar");
         gAuth = FirebaseAuth.getInstance();
-        simdikikullaniciid=gAuth.getUid();
+        simdikikullaniciid = gAuth.getUid();
         kullaniciRef2 = FirebaseDatabase.getInstance().getReference().child("kullanicilar").child(simdikikullaniciid);
-
-        kullaniciRef2.child("kontrol").push().setValue("");
-
 
 
     }
-
-
 
 
     @Override
@@ -57,53 +52,39 @@ public class ArkadasbulActivity extends AppCompatActivity {
         FirebaseRecyclerOptions<kullanicilar> options = new FirebaseRecyclerOptions.Builder<kullanicilar>()
                 .setQuery(kullaniciRef, kullanicilar.class)
                 .build();
-
-        FirebaseRecyclerAdapter<kullanicilar,ArkadasBulGoster > adapter
+        FirebaseRecyclerAdapter<kullanicilar, ArkadasBulGoster> adapter
                 = new FirebaseRecyclerAdapter<kullanicilar, ArkadasBulGoster>(options) {
             @Override
             protected void onBindViewHolder(@NonNull ArkadasBulGoster holder, int position, @NonNull kullanicilar model) {
                 holder.kullaniciprofiladi.setText(model.getName());
                 holder.kullanicidurumyazisi.setText(model.getDurum());
                 Picasso.get().load(model.getImage()).placeholder(R.drawable.profile_image).into(holder.kullanicilarprofilresim);
-
-
-
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent gecis = new Intent(getApplicationContext(),OzelMesaj.class);
-                        gecis.putExtra("kime",model.getName());
+                        Intent gecis = new Intent(getApplicationContext(), OzelMesaj.class);
+                        gecis.putExtra("kime", model.getName());
                         startActivity(gecis);
-
-
                     }
                 });
-
             }
-
             @NonNull
             @Override
             public ArkadasBulGoster onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.kullanici_goster_layout,parent,false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.kullanici_goster_layout, parent, false);
                 ArkadasBulGoster goster = new ArkadasBulGoster(view);
-                return  goster;
-
+                return goster;
             }
         };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
 
-    public static class ArkadasBulGoster extends RecyclerView.ViewHolder
-    {
-
-        TextView kullaniciprofiladi,kullanicidurumyazisi;
+    public static class ArkadasBulGoster extends RecyclerView.ViewHolder {
+        TextView kullaniciprofiladi, kullanicidurumyazisi;
         CircleImageView kullanicilarprofilresim;
-
-
         public ArkadasBulGoster(@NonNull View itemView) {
             super(itemView);
-
             kullaniciprofiladi = itemView.findViewById(R.id.kullaniciprofiladi);
             kullanicidurumyazisi = itemView.findViewById(R.id.kullanicidurumyazisi);
             kullanicilarprofilresim = itemView.findViewById(R.id.kullanicilarprofilresim);

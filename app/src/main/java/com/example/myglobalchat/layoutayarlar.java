@@ -50,8 +50,8 @@ public class layoutayarlar extends Fragment {
     private TextView exittext;
     private FirebaseUser currentuser;
     private Fragment tempFragment;
-    private static final int galeripick = 1 ;
-    private static final int RESULT_OK = -1 ;
+    private static final int galeripick = 1;
+    private static final int RESULT_OK = -1;
     private StorageReference kullaniciprofilresmi;
 
 
@@ -73,17 +73,12 @@ public class layoutayarlar extends Fragment {
         kullaniciprofilresmi = FirebaseStorage.getInstance().getReference().child("Profil Fotograflari");
 
 
-
-
-
-
         ayarlari_guncelle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ayarguncelleme();
             }
         });
-
 
 
         exittext.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +94,6 @@ public class layoutayarlar extends Fragment {
         });
 
 
-
         kullanicibilgisigetir();
 
         profile_image.setOnClickListener(new View.OnClickListener() {
@@ -109,10 +103,10 @@ public class layoutayarlar extends Fragment {
                 Intent galleriIntent = new Intent();
                 galleriIntent.setAction(Intent.ACTION_GET_CONTENT);
                 galleriIntent.setType("image/*");
-               // startActivityForResult(galleriIntent,galeripick);
+                // startActivityForResult(galleriIntent,galeripick);
 
 
-                onActivityResult(1,-1,galleriIntent);
+                onActivityResult(1, -1, galleriIntent);
 
 
             }
@@ -159,7 +153,6 @@ public class layoutayarlar extends Fragment {
     }
 
 
-
     private void kullanicibilgisigetir() {
         RootRef.child("kullanicilar").child(currentuserID)
                 .addValueEventListener(new ValueEventListener() {
@@ -196,29 +189,23 @@ public class layoutayarlar extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode ==galeripick && resultCode==RESULT_OK && data != null)
-        {
+        if (requestCode == galeripick && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
             CropImage.activity()
                     .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(1,1)
-                    .start(getContext(),this);
-
+                    .setAspectRatio(1, 1)
+                    .start(getContext(), this);
         }
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-                StorageReference filePath = kullaniciprofilresmi.child(currentuserID+".jpg");
+                StorageReference filePath = kullaniciprofilresmi.child(currentuserID + ".jpg");
                 filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task2) {
-                        if (task2.isSuccessful())
-                        {
-
-                            Toast.makeText(getContext(),"Profil Fotoğrafı Başarıyla Değiştirildi.", Toast.LENGTH_SHORT).show();
-
+                        if (task2.isSuccessful()) {
+                            Toast.makeText(getContext(), "Profil Fotoğrafı Başarıyla Değiştirildi.", Toast.LENGTH_SHORT).show();
                             final Task<Uri> profilurl = task2.getResult().getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -226,27 +213,19 @@ public class layoutayarlar extends Fragment {
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful())
-                                                    {
-                                                        Toast.makeText(getContext(),"Resim Veritabanına Başarıyla Yüklendi",Toast.LENGTH_SHORT).show();
-                                                    }
-                                                    else
-                                                    {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(getContext(), "Resim Veritabanına Başarıyla Yüklendi", Toast.LENGTH_SHORT).show();
+                                                    } else {
                                                         String error = task.getException().toString();
-                                                        Toast.makeText(getContext(),"Hata : " + error , Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getContext(), "Hata : " + error, Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
                                             });
-
-
                                 }
                             });
-
-                        }
-                        else
-                        {
+                        } else {
                             String hata = task2.getException().toString();
-                            Toast.makeText(getContext(),"Hata : " +hata , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Hata : " + hata, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
