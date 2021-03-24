@@ -27,6 +27,7 @@ Each user has properties such as username (required), status, profile picture. T
       <img src="https://github.com/Serhatdnli/My-Global-Chat-Mobile-Application/blob/main/profil.png?raw=true" width="60%">
     </td>
   </tr>
+  <tr>
      <td>
       <img src="https://github.com/Serhatdnli/My-Global-Chat-Mobile-Application/blob/main/menu.png?raw=true" width="60%">
     </td>
@@ -36,9 +37,7 @@ Each user has properties such as username (required), status, profile picture. T
     <td>
       <img src="https://github.com/Serhatdnli/My-Global-Chat-Mobile-Application/blob/main/durum.png?raw=true" width="60%">
     </td>
-  <tr>
-  
-  </tr>
+ </tr>
 </table>
 
 
